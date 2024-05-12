@@ -1,0 +1,37 @@
+﻿@model CRUD_Operation.Models.ProductWebModel
+
+@{
+    ViewData["Title"] = "ViewProduct";
+}
+
+<h3>
+    <div style="display: inline-block; width: 95%;">View Product</div> 
+    <button class="btn btn-success" style="margin-left: 0.3rem;">
+        <a class="ml-5" asp-action="Index" style="text-decoration: none;color: #fff;"><i class="bi bi-card-list"></i></a>
+    </button>
+</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PRODUCT)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PRODUCT)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DESCRIPTION)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DESCRIPTION)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CREATEDDATE)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CREATEDDATE)
+        </dd>
+    </dl>
+</div>
+

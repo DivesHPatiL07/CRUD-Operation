@@ -1,0 +1,100 @@
+﻿@model CRUD_Operation.Models.ProductWebModel
+
+@{
+    ViewData["Title"] = "AddProduct";
+}
+<h3>
+    <div style="display: inline-block; width: 95%;">Add Product</div>
+    <button class="btn btn-success" style="margin-left: 0.3rem;">
+        <a class="ml-5" asp-action="Index" style="text-decoration: none;color: #fff;"><i class="bi bi-card-list"></i></a>
+    </button> 
+</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <div class="form-group">
+                <label asp-for="ID" class="control-label"></label>
+                <input asp-for="ID" class="form-control" />
+                <span asp-validation-for="ID" class="text-danger"></span>
+            </div> *@
+            <input type="hidden" asp-for="ID" class="form-control" />
+            <div class="form-group">
+                <label asp-for="PRODUCT" class="control-label"></label>
+                <input asp-for="PRODUCT" maxlength="255" class="form-control"/>
+                <span asp-validation-for="PRODUCT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DESCRIPTION" class="control-label"></label>
+                <input asp-for="DESCRIPTION" maxlength="500" class="form-control"/>
+                <span asp-validation-for="DESCRIPTION" class="text-danger"></span>
+            </div>
+            @* <div class="form-group">
+                <label asp-for="CREATEDDATE" class="control-label"></label>
+                <input asp-for="CREATEDDATE" class="form-control" />
+                <span asp-validation-for="CREATEDDATE" class="text-danger"></span>
+            </div> *@
+            <div class="form-group mt-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $('form').submit(function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Create FormData object to store form data
+            var formData = new FormData(this);
+
+            // Send Ajax request
+            $.ajax({
+                url: SiteUrl + 'Home/SaveProduct', // Specify your server endpoint
+                type: 'POST',
+                data: formData,
+                processData: false, // Prevent jQuery from automatically processing the data
+                contentType: false, // Set content type to false for FormData
+                success: function (response) {
+                    // Handle success response
+                    if (response.success == true) {
+                        Swal.fire({
+                            title: response.message+"!",
+                            text: "Your record has been " + response.message + ".",
+                            icon: "success"
+                        }).then((result) => {
+                            window.location.href = SiteUrl + 'Home/Index';
+                        });;
+                    } else {
+                        if (response.message != null) {
+                            Swal.fire({
+                                title: "Error!",
+                                text: response.message,
+                                icon: "error"
+                            });
+                        }
+                    }
+                    //alert(response);
+                    //console.log('Success:', response);
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    Swal.fire({
+                        title: "Error!",
+                        text: error,
+                        icon: "error"
+                    });
+                    //console.error('Error:', error);
+                }
+            });
+        });
+        // Send Ajax request
+        
+    </script>
+}
